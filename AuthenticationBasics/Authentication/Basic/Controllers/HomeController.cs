@@ -22,6 +22,12 @@ namespace Basic.Controllers
             return View();
         }
 
+        [Authorize(Policy = "Claim.DOB")]
+        public IActionResult SecretPolicy()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> Authenticate()
         {
             var webTechClaims = new List<Claim>()
