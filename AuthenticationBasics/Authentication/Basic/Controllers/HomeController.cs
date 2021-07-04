@@ -11,6 +11,12 @@ namespace Basic.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IAuthorizationService _authorizationService;
+
+        public HomeController(IAuthorizationService authorizationService)
+        {
+            _authorizationService = authorizationService;
+        }
         public IActionResult Index()
         {
             return View();
@@ -28,6 +34,7 @@ namespace Basic.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Authenticate()
         {
             var webTechClaims = new List<Claim>()
@@ -49,6 +56,19 @@ namespace Basic.Controllers
             await HttpContext.SignInAsync(userPrincipal);
 
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> DoStuff()
+        {
+            // we are doing stuff here
+            var builder = new AuthorizationPolicyBuilder("Schema");
+            var customPolicy = builder.RequireClaim("Hello").Build();
+            var authResult=await _authorizationService.AuthorizeAsync(User, customPolicy);
+            if(authResult.Succeeded)
+            {
+
+            }
+            return View("Index");
         }
     }
 }
