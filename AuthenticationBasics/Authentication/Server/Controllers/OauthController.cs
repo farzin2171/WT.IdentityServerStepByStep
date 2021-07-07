@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.Extensions;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -23,11 +24,11 @@ namespace Server.Controllers
             var query = new QueryBuilder();
             query.Add("redireUri", redirect_uri);
             query.Add("state", state);
-            return View(model:query.ToString());
+            return View(model: query.ToString());
         }
 
         [HttpPost]
-        public IActionResult Authorize(string userName, 
+        public IActionResult Authorize(string userName,
                                        string redireUri,
                                        string state)
         {
@@ -38,7 +39,7 @@ namespace Server.Controllers
             return Redirect($"{redireUri}{query.ToString()}");
         }
 
-        public  async Task<IActionResult> Token(string grant_type, //flow of accec_token request
+        public async Task<IActionResult> Token(string grant_type, //flow of accec_token request
                                    string code, //confiramtion of the authenticateion 
                                    string redirect_uri,
                                    string client_id)
@@ -70,10 +71,20 @@ namespace Server.Controllers
             };
             var responseJson = JsonConvert.SerializeObject(responseObject);
             var responseBytes = Encoding.UTF8.GetBytes(responseJson);
-            await Response.Body.WriteAsync(responseBytes,0,responseBytes.Length);
+            await Response.Body.WriteAsync(responseBytes, 0, responseBytes.Length);
 
             return Redirect(redirect_uri);
-            
+
+        }
+
+        [Authorize]
+        public IActionResult Validate()
+        {
+            if (HttpContext.Request.Query.TryGetValue("access_token", out var acessToken))
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }
