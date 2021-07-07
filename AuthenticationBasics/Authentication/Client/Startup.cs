@@ -77,6 +77,7 @@ namespace Client
                     };
                 });
 
+            services.AddHttpClient();
             services.AddControllersWithViews();
             services.AddSwaggerGen(c =>
             {
