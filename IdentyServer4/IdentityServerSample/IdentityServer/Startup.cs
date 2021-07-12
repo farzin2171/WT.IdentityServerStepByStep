@@ -26,6 +26,7 @@ namespace IdentityServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentityServer()
+                .AddInMemoryIdentityResources(IdentityServerConfiguration.GetIdentityResources())
                 .AddInMemoryApiResources(IdentityServerConfiguration.GetApis())
                 .AddInMemoryApiScopes(IdentityServerConfiguration.GetApiScopes())
                 .AddInMemoryClients(IdentityServerConfiguration.GetClient())
