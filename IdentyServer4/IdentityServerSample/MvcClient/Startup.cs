@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,8 +40,22 @@ namespace MvcClient
                     config.SaveTokens = true;
 
                     config.ResponseType = "code";
+                    //configure cookie claim mapping
+                    config.ClaimActions.DeleteClaim("amr");
+                    config.ClaimActions.DeleteClaim("s_hash");
+                    config.ClaimActions.MapUniqueJsonKey("wt.MvcTenant", "wt.Tenant");
+                    //two trips to load claims in the cookie
+                    //but the id is smaller
+                    config.GetClaimsFromUserInfoEndpoint = true;
+
+                    //configure scope
+                    config.Scope.Clear();
+                    config.Scope.Add("openid");
+                    config.Scope.Add("wt.scope");
+                    config.Scope.Add("ApiOne");
+
                 });
-                
+            services.AddHttpClient();
             services.AddControllersWithViews();
         }
 
