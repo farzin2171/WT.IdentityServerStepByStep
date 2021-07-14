@@ -13,7 +13,15 @@ namespace IdentityServer
             new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResource
+                {
+                    Name="wt.scope",
+                    UserClaims =
+                    {
+                        "wt.Tenant"
+                    }
+                }
             };
         public static IEnumerable<ApiScope> GetApiScopes()
         {
@@ -25,7 +33,7 @@ namespace IdentityServer
         }
         public static IEnumerable<ApiResource> GetApis() =>
             new List<ApiResource> {
-                new ApiResource("ApiOne")
+                new ApiResource("ApiOne",new string[]{"wt.api.Tenant"})
                 {
                    Scopes = new []{ "ApiOne" }
                 },
@@ -55,8 +63,11 @@ namespace IdentityServer
                     AllowedScopes={"ApiOne",
                                    "ApiTwo",
                                    IdentityServerConstants.StandardScopes.OpenId,
-                                   IdentityServerConstants.StandardScopes.Profile
+                                   IdentityServerConstants.StandardScopes.Profile,
+                                   "wt.scope"
                                   },
+                    // puts all the claims in the id token
+                    //AlwaysIncludeUserClaimsInIdToken=true,
                     RequireConsent=false
                 }
             };

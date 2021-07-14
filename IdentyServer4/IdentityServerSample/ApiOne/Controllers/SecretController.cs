@@ -15,6 +15,7 @@ namespace ApiOne.Controllers
         [HttpGet]
         public string Index()
         {
+            var claims = User.Claims.ToList();
             return "Secret message from ApiOne";
         }
     }
