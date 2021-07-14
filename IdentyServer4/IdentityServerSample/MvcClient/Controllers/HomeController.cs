@@ -38,6 +38,8 @@ namespace MvcClient.Controllers
 
             var result = await GetSecret(accessToken);
 
+            await RefreshAccessToken();
+
             return View();
         }
 
@@ -53,6 +55,32 @@ namespace MvcClient.Controllers
             return content;
 
             
+        }
+
+        private async Task RefreshAccessToken()
+        {
+            var serverClient = _httpClientFactory.CreateClient();
+            var discoveryDocument = await serverClient.GetDiscoveryDocumentAsync("https://localhost:44378/");
+
+            var refreshToken= await HttpContext.GetTokenAsync("refresh_token");
+            var refreshTokenClient = _httpClientFactory.CreateClient();
+
+            var tokenResponse = await refreshTokenClient.RequestRefreshTokenAsync(new RefreshTokenRequest
+            {
+                Address = discoveryDocument.TokenEndpoint,
+                RefreshToken = refreshToken,
+                ClientId = "client_id_mvc",
+                ClientSecret = "clinet_secret_mvc_123",
+            });
+
+            var authInfo = await HttpContext.AuthenticateAsync("Cookie");
+
+            authInfo.Properties.UpdateTokenValue("access_token", tokenResponse.AccessToken);
+            authInfo.Properties.UpdateTokenValue("refresh_token", tokenResponse.RefreshToken);
+
+            await HttpContext.SignInAsync("Cookie", authInfo.Principal, authInfo.Properties);
+
+
         }
     }
 }

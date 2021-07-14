@@ -53,6 +53,8 @@ namespace MvcClient
                     config.Scope.Add("openid");
                     config.Scope.Add("wt.scope");
                     config.Scope.Add("ApiOne");
+                    config.Scope.Add("offline_access");
+
 
                 });
             services.AddHttpClient();
