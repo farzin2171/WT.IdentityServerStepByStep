@@ -28,7 +28,8 @@ namespace IdentityServer
             return new List<ApiScope>
             {
                 // backward compat
-                new ApiScope("ApiOne")
+                new ApiScope("ApiOne"),
+                 new ApiScope("ApiTwo")
             };
         }
         public static IEnumerable<ApiResource> GetApis() =>
@@ -69,6 +70,25 @@ namespace IdentityServer
                     // puts all the claims in the id token
                     //AlwaysIncludeUserClaimsInIdToken=true,
                     AllowOfflineAccess=true,
+                    RequireConsent=false
+                },
+                new Client
+                {
+                    ClientId="client_id_js",
+                    ClientSecrets={new Secret("clinet_secret_js_123".ToSha256())},
+                    AllowedGrantTypes=GrantTypes.Implicit,
+                    RedirectUris={"https://localhost:44315/home/signIn" },
+                     AllowedCorsOrigins={"https://localhost:44315"},
+                    AllowedScopes={"ApiOne",
+                                   "ApiTwo",
+                                   IdentityServerConstants.StandardScopes.OpenId,
+                                   IdentityServerConstants.StandardScopes.Profile,
+                                   "wt.scope"
+                                  },
+                    AccessTokenLifetime=1,
+                    // puts all the claims in the id token
+                    //AlwaysIncludeUserClaimsInIdToken=true,
+                    AllowAccessTokensViaBrowser=true,
                     RequireConsent=false
                 }
             };

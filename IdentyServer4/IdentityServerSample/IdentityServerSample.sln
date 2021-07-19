@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiOne", "ApiOne\ApiOne.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiTwo", "..\ApiTwo\ApiTwo.csproj", "{D2C457E0-92DE-4645-850C-35986C07B88B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcClient", "MvcClient\MvcClient.csproj", "{E35BC332-2F24-4C98-881F-606BF4D69E14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcClient", "MvcClient\MvcClient.csproj", "{E35BC332-2F24-4C98-881F-606BF4D69E14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JavaScriptClient", "JavaScriptClient\JavaScriptClient.csproj", "{AA89C82C-3CAF-42AD-9EEB-7A30C9DCF7E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{E35BC332-2F24-4C98-881F-606BF4D69E14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E35BC332-2F24-4C98-881F-606BF4D69E14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E35BC332-2F24-4C98-881F-606BF4D69E14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA89C82C-3CAF-42AD-9EEB-7A30C9DCF7E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA89C82C-3CAF-42AD-9EEB-7A30C9DCF7E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA89C82C-3CAF-42AD-9EEB-7A30C9DCF7E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA89C82C-3CAF-42AD-9EEB-7A30C9DCF7E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
