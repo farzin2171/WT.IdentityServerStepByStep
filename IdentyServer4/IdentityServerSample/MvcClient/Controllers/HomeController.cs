@@ -82,5 +82,10 @@ namespace MvcClient.Controllers
 
 
         }
+
+        public IActionResult Logout()
+        {
+            return SignOut("Cookie", "oidc");
+        }
     }
 }

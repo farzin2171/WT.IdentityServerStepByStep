@@ -9,7 +9,7 @@ namespace IdentityServer
     //https://nahidfa.com/posts/migrating-identityserver4-to-v4/
     public static class IdentityServerConfiguration
     {
-        public static IEnumerable<IdentityResource> GetIdentityResources () =>
+        public static IEnumerable<IdentityResource> GetIdentityResources() =>
             new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
@@ -61,6 +61,7 @@ namespace IdentityServer
                     ClientSecrets={new Secret("clinet_secret_mvc_123".ToSha256())},
                     AllowedGrantTypes=GrantTypes.Code,
                     RedirectUris={"https://localhost:44352/signin-oidc" },
+                    PostLogoutRedirectUris={"https://localhost:44352/home/index" },
                     AllowedScopes={"ApiOne",
                                    "ApiTwo",
                                    IdentityServerConstants.StandardScopes.OpenId,
@@ -78,7 +79,8 @@ namespace IdentityServer
                     ClientSecrets={new Secret("clinet_secret_js_123".ToSha256())},
                     AllowedGrantTypes=GrantTypes.Implicit,
                     RedirectUris={"https://localhost:44315/home/signIn" },
-                     AllowedCorsOrigins={"https://localhost:44315"},
+                    PostLogoutRedirectUris={"https://localhost:44315/home/index" },
+                    AllowedCorsOrigins={"https://localhost:44315"},
                     AllowedScopes={"ApiOne",
                                    "ApiTwo",
                                    IdentityServerConstants.StandardScopes.OpenId,

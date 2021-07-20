@@ -4,7 +4,8 @@
     client_id: "client_id_js",
     response_type: "id_token token",
     redirect_uri: "https://localhost:44315/Home/signIn",
-    scope: "openid ApiOne ApiTwo wt.scope"
+    post_logout_redirect_uri: "https://localhost:44315/Home/Index",
+    scope: "openid ApiOne ApiTwo wt.scope",
 };
 
 
@@ -14,6 +15,11 @@ var userManager = new Oidc.UserManager(config);
 var signIn = function () {
     userManager.signinRedirect();
 
+}
+
+
+var signOut = function () {
+    userManager.signoutRedirect();
 }
 
 userManager.getUser().then(user => {
