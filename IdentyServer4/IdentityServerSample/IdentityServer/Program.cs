@@ -1,5 +1,9 @@
+using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.Mappers;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,11 +31,13 @@ namespace IdentityServer
                 userManager.CreateAsync(user, "password").GetAwaiter().GetResult();
                 userManager.AddClaimAsync(user, new Claim("wt.Tenant", "Webtech")).GetAwaiter().GetResult();
                 userManager.AddClaimAsync(user, new Claim("wt.api.Tenant", "Equisoft")).GetAwaiter().GetResult();
+
+
             }
 
             host.Run();
         }
-
+        
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
