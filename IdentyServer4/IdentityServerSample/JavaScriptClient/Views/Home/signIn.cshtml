@@ -4,7 +4,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.10.1/oidc-client.min.js"></script>
 <script>
     var userManger = new Oidc.UserManager({
-        userStore: new Oidc.WebStorageStateStore({ store: window.localStorage })
+        userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }),
+        response_mode:"query"
     });
     userManger.signinCallback().then(res => {
         console.log(res);

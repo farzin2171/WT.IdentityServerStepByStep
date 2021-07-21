@@ -38,7 +38,7 @@ namespace MvcClient
                     config.ClientId = "client_id_mvc";
                     config.ClientSecret = "clinet_secret_mvc_123";
                     config.SaveTokens = true;
-
+                    config.UsePkce = true;
                     config.ResponseType = "code";
 
                     config.SignedOutCallbackPath = "/Home/Index";

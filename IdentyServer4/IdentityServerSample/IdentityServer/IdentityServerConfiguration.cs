@@ -60,6 +60,7 @@ namespace IdentityServer
                     ClientId="client_id_mvc",
                     ClientSecrets={new Secret("clinet_secret_mvc_123".ToSha256())},
                     AllowedGrantTypes=GrantTypes.Code,
+                    RequirePkce=true,
                     RedirectUris={"https://localhost:44352/signin-oidc" },
                     PostLogoutRedirectUris={"https://localhost:44352/home/index" },
                     AllowedScopes={"ApiOne",
@@ -77,7 +78,9 @@ namespace IdentityServer
                 {
                     ClientId="client_id_js",
                     ClientSecrets={new Secret("clinet_secret_js_123".ToSha256())},
-                    AllowedGrantTypes=GrantTypes.Implicit,
+                    AllowedGrantTypes=GrantTypes.Code,
+                    RequirePkce=true,
+                    RequireClientSecret=false,
                     RedirectUris={"https://localhost:44315/home/signIn" },
                     PostLogoutRedirectUris={"https://localhost:44315/home/index" },
                     AllowedCorsOrigins={"https://localhost:44315"},
