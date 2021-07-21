@@ -14,7 +14,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace IdentityServer
@@ -22,12 +24,15 @@ namespace IdentityServer
     //https://identityserver4.readthedocs.io/en/latest/quickstarts/5_entityframework.html
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration,IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
+
+        private readonly IWebHostEnvironment _env;
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -57,7 +62,8 @@ namespace IdentityServer
 
             var assembly = typeof(Startup).Assembly.GetName().Name;
 
-
+            var filepath = Path.Combine(_env.ContentRootPath, "is_cert.pfx");
+            var certificate = new X509Certificate2(filepath,"password");
             services.AddIdentityServer()
                 .AddAspNetIdentity<IdentityUser>()
                 .AddConfigurationStore(options =>
@@ -74,7 +80,8 @@ namespace IdentityServer
                 //.AddInMemoryApiResources(IdentityServerConfiguration.GetApis())
                 //.AddInMemoryApiScopes(IdentityServerConfiguration.GetApiScopes())
                 //.AddInMemoryClients(IdentityServerConfiguration.GetClient())
-                .AddDeveloperSigningCredential();
+                //.AddDeveloperSigningCredential();
+                .AddSigningCredential(certificate);
 
             services.AddControllersWithViews();
             services.AddSwaggerGen(c =>
